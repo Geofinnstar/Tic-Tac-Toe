@@ -1,8 +1,3 @@
-int random(int max) {
-    srand((unsigned) time(NULL));
-    return (rand() % max) + 1;
-}
-
 int makeAIMove(Board *board) {
 	Board tempBoard;
 	int win = 0;
@@ -41,12 +36,18 @@ int makeAIMove(Board *board) {
 		}
 	}
 
-	int randomNumber = random(9) - 1;
+	int possiblePlaceLocations[9] = {0};
+	int count = 0;
 
-	while (tempBoard.boardState[randomNumber] != SPACE) {
-		randomNumber = random(9) - 1;
+	for (int i = 0; i < 9; i++) {
+		if (tempBoard.boardState[i] == SPACE) {
+			possiblePlaceLocations[count] = i;
+			count++;
+		}
 	}
 
-	board->boardState[randomNumber] = P2;
+	int randomNumber = random(sizeof(possiblePlaceLocations) / sizeof(possiblePlaceLocations[0]));
+
+	board->boardState[possiblePlaceLocations[randomNumber]] = P2;
 	return 0;
 }

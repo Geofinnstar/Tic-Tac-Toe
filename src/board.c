@@ -1,3 +1,9 @@
+const int BOARD_HORIZONTAL_SIZE = 13;
+const int BOARD_VERTICAL_SIZE = 7;
+const char P1 = 'X';
+const char P2 = 'O';
+const char SPACE  = ' ';
+
 struct Board {
 	char boardState[9];
 	int playerTurn;
@@ -69,74 +75,27 @@ int placeBoardValue(Board *board, int place, char value) {
 }
 
 int isGameWon(Board board) {
-	char playerValue = SPACE;
-
-	if (board.boardState[2] != SPACE) {
-		playerValue = board.boardState[2];
-
-		// 1 2 3
-		if (board.boardState[5] == playerValue && board.boardState[8] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
-		}
-
-		// 3 6 9
-		if (board.boardState[0] == playerValue && board.boardState[1] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
+	// Rows
+	for (int i = 0; i < 9; i += 3) {
+		if (board.boardState[i] != SPACE && board.boardState[i] == board.boardState[i+1] && board.boardState[i] == board.boardState[i+2]) {
+			return (board.boardState[i] == P1) ? 1 : 2;
 		}
 	}
 
-	if (board.boardState[4] != SPACE) {
-		playerValue = board.boardState[4];
-
-		// 1 5 9
-		if (board.boardState[0] == playerValue && board.boardState[8] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
-		}
-
-		// 3 5 7
-		if (board.boardState[2] == playerValue && board.boardState[6] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
-		}
-
-		// 2 5 8
-		if (board.boardState[1] == playerValue && board.boardState[7] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
-		}
-
-		// 4 5 6
-		if (board.boardState[3] == playerValue && board.boardState[5] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
+	// Columns
+	for (int i = 0; i < 3; i++) {
+		if (board.boardState[i] != SPACE && board.boardState[i] == board.boardState[i+3] && board.boardState[i] == board.boardState[i+6]) {
+			return (board.boardState[i] == P1) ? 1 : 2;
 		}
 	}
 
-	if (board.boardState[6] != SPACE) {
-		playerValue = board.boardState[6];
+	// Diagonals
+	if (board.boardState[0] != SPACE && board.boardState[0] == board.boardState[4] && board.boardState[0] == board.boardState[8]) {
+		return (board.boardState[0] == P1) ? 1 : 2;
+	}
 
-		// 7 8 9
-		if (board.boardState[7] == playerValue && board.boardState[8] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
-		}
-
-		// 1 4 7
-		if (board.boardState[0] == playerValue && board.boardState[3] == playerValue) {
-			if (playerValue == P1)
-				return 1;
-			return 2;
-		}
+	if (board.boardState[2] != SPACE && board.boardState[2] == board.boardState[4] && board.boardState[2] == board.boardState[6]) {
+		return (board.boardState[2] == P1) ? 1 : 2;
 	}
 
 	return 0;

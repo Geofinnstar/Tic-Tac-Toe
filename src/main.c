@@ -3,9 +3,13 @@
 #include <conio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
-#include "standardIntergrations.h"
-#include "board.h"
+int random(int max) {
+    srand((unsigned) time(NULL));
+    return rand() % max;
+}
+
 #include "board.c"
 #include "ai.c"
 
